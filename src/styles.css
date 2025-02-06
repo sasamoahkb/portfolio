@@ -38,7 +38,8 @@
 }
 
 .media-group {
-    padding: 115px;
+    padding-top: 50px;
+    padding-bottom: 0px;
     margin: auto;
 }
 
