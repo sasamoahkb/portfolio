@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: docker-nodejs-demo
+  name: docker-nodejs-portfolio
   namespace: default
 spec:
   replicas: 1
