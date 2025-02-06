@@ -21,10 +21,8 @@ EXPOSE 3000
 # Use BuildKit cache mounts for faster builds (especially for npm packages).
 # Cache the npm modules using the /root/.npm directory to speed up subsequent builds.
 # This will avoid re-downloading dependencies if they haven't changed.
-RUN --mount=type=bind,source=package.json,target=package.json \
-    --mount=type=bind,source=package-lock.json,target=package-lock.json \
-    --mount=type=cache,target=/root/.npm \
-    npm ci --omit=dev
+COPY package.json package-lock.json /src/
+RUN npm ci --omit=dev
 
 # Use a non-root user for security purposes.
 USER node
