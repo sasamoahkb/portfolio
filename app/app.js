@@ -5,6 +5,8 @@ const app = express();
 const db = require('./services/db');
 // Middleware to parse URL-encoded data
 app.use(express.urlencoded({ extended: true }));
+const compression = require("compression");
+app.use(compression());
 
 // Set up the static directory for serving CSS and images
 app.use(express.static(path.join(__dirname, "../src")));
