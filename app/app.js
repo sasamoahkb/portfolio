@@ -27,6 +27,7 @@ app.get("/images/:file", (req, res) => {
     ".jpeg": "image/jpeg",
     ".png": "image/png",
     ".svg": "image/svg+xml",
+    ".webp": "image/webp",
   };
 
   res.setHeader("Content-Type", mimeTypes[ext] || "application/octet-stream");
