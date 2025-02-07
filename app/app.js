@@ -11,6 +11,32 @@ app.use(compression());
 // Set up the static directory for serving CSS and images
 app.use(express.static(path.join(__dirname, "../src")));
 
+app.get("/images/:file", (req, res) => {
+  const filePath = path.join(__dirname, "../src/images", req.params.file);
+
+  // Check if the file exists
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).send("File not found");
+  }
+
+  // Set Content-Type dynamically
+  const ext = path.extname(filePath).toLowerCase();
+  const mimeTypes = {
+    ".gif": "image/gif",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".png": "image/png",
+    ".svg": "image/svg+xml",
+  };
+
+  res.setHeader("Content-Type", mimeTypes[ext] || "application/octet-stream");
+
+  // Stream the file
+  fs.createReadStream(filePath).pipe(res);
+});
+
+
+
 // Set the views directory
 app.set("views", path.join(__dirname, "views"));
 
@@ -40,29 +66,6 @@ app.get("/webdev", (req, res) => {
   res.sendFile(path.join(__dirname, "views/webDev.html"));
 });
 
-app.get("/images/:file", (req, res) => {
-  const filePath = path.join(__dirname, "src/images", req.params.file);
-
-  // Check if the requested file exists
-  if (!fs.existsSync(filePath)) {
-    return res.status(404).send("File not found");
-  }
-
-  // Set Content-Type dynamically based on the file extension
-  const ext = path.extname(filePath).toLowerCase();
-  const mimeTypes = {
-    ".gif": "image/gif",
-    ".jpg": "image/jpeg",
-    ".jpeg": "image/jpeg",
-    ".png": "image/png",
-    ".svg": "image/svg+xml",
-  };
-
-  res.setHeader("Content-Type", mimeTypes[ext] || "application/octet-stream");
-
-  // Stream the file to the response
-  fs.createReadStream(filePath).pipe(res);
-});
 
 // app.get("/dashboard",(req,res)=>{
 //     sql = 'select * from festivals';
