@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 .background {
     margin: auto;
     height: 100vh;
